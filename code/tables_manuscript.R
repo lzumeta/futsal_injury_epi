@@ -9,6 +9,8 @@ library(kableExtra)
 theme_set(theme_bw())
 tabs_path <- "./results/tables/"
 
+mypaste <- function(x,y) paste0(x, " (", y, "\\%)")
+
 ## load the data
 # data <- readRDS("not-available")
 
