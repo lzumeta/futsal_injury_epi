@@ -4,6 +4,7 @@
 # Settings -----------------------------------------------------------------
 ## load the libraries
 library(tidyverse)
+library(epitools)
 
 theme_set(theme_bw())
 fig_path <- "./results/figures/"
@@ -33,8 +34,8 @@ data |>
         axis.title = element_text(size = rel(1.3)),
         legend.text = element_text(size = rel(1.3)),
         strip.text = element_text(face = "bold", size = rel(1.3)))
-ggsave(paste0(fig_path, "fig1.jpg"), width = 11.2, height = 4.8)
-ggsave(paste0(fig_path, "fig1.pdf"), device = "pdf", width = 11.2, height = 4.8)
+ggsave(paste0(fig_path, "Figure 1.jpg"), width = 12.2, height = 4.8, dpi = 300)
+ggsave(paste0(fig_path, "Figure 1.pdf"), device = "pdf", width = 12.2, height = 4.8)
 
 
 
@@ -45,7 +46,9 @@ inc_prop_temp <- data |>
   group_by(Temporada2, CategoriaDef) |> 
   summarise(n_indiv_les = sum(lesio=="Si"), 
             n_indiv = n(), 
-            prev_temp = round(n_indiv_les/n_indiv*100,2))
+            prev_temp = round(n_indiv_les/n_indiv*100,2),
+            ci_low = binom.wilson(n_indiv_les, n_indiv)$lower*100,
+            ci_up = binom.wilson(n_indiv_les, n_indiv)$upper*100)
 
 inc_prop_temp |> 
   mutate(CategoriaDef = factor(CategoriaDef, 
@@ -53,10 +56,19 @@ inc_prop_temp |>
   ggplot(aes(x = Temporada2, y = prev_temp, 
              fill = CategoriaDef, group = CategoriaDef)) +
   geom_col(show.legend = F) + 
+  geom_point(size = 1) +
+  geom_errorbar(
+    aes(ymin = ci_low, ymax = ci_up),
+    position = position_dodge(width = 0.9), 
+    width = 0.25,      
+    color = "black",
+    linewidth = 0.7   
+  ) +
   geom_hline(yintercept  = 100, col = "black") + 
   geom_text(aes(label = paste0(n_indiv_les, "/", n_indiv)),
-            position = position_dodge(width = .9),
-            col = "grey25", size = 4, hjust = 0.5, vjust = -0.2) + 
+            position = position_dodge(width = 0.9),
+            vjust = 1,
+            col = "grey25", size = 4) + 
   # geom_smooth(aes(col = CategoriaDef), se = F, show.legend = F) +
   facet_wrap(~CategoriaDef,
              labeller = labeller(CategoriaDef = c(Youth = "Youth", "Professional" = "Senior"))) +
@@ -67,9 +79,10 @@ inc_prop_temp |>
   theme(axis.text = element_text(size = rel(1.3)),
         axis.title = element_text(size = rel(1.3)),
         legend.text = element_text(size = rel(1.3)),
-        strip.text = element_text(face = "bold", size = rel(1.3)))
-ggsave(paste0(fig_path, "fig2.jpg"), width = 11.2, height = 4.8)
-ggsave(paste0(fig_path, "fig2.pdf"), device = "pdf", width = 11.2, height = 4.8)
+        strip.text = element_text(face = "bold", size = rel(1.3)),
+        legend.position = "none")
+ggsave(paste0(fig_path, "Figure 2.jpg"), width = 13.2, height = 5, dpi = 300)
+ggsave(paste0(fig_path, "Figure 2.pdf"), device = "pdf", width = 13.2, height = 5)
 
 
 
@@ -99,8 +112,8 @@ data_sev |>
         axis.title = element_text(size = rel(1.3)),
         legend.text = element_text(size = rel(1.3)),
         strip.text = element_text(face = "bold", size = rel(1.3)))
-ggsave(paste0(fig_path, "fig4.jpg"), width = 9.5, height = 4)
-ggsave(paste0(fig_path, "fig4.pdf"), device = "pdf", width = 9.5, height = 4)
+ggsave(paste0(fig_path, "Figure 4.jpg"), width = 12.5, height = 5, dpi = 300)
+ggsave(paste0(fig_path, "figure 4.pdf"), device = "pdf", width = 12.2, height = 5)
 
 
 
