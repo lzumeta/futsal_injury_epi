@@ -1,4 +1,4 @@
-# README
+# README [![DOI](https://zenodo.org/badge/999359305.svg)](https://doi.org/10.5281/zenodo.18161059)
 
 This is the acompanying code repository for the research paper:
 
