@@ -2,7 +2,9 @@
 
 This is the acompanying code repository for the research paper:
 
-*"Injury patterns in an elite men's futsal club: a 9-season cohort study"* 
+*"Injury Patterns in an Elite Men's Futsal Club: A Nine-Season Cohort Study"* 
+
+published in the International Journal of Sports Medicine https://doi.org/10.1055/a-2764-2503. The aim is to describe the types and frequencies of injuries sustained by elite futsal players. It is an observational, retrospective analysis of injuries recorded over nine consecutive seasons within a single club, and provides a detailed injury profile across multiple competitive levels.
 
 
 ## Session info
